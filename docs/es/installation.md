@@ -10,6 +10,14 @@ Solo se puede instalar con docker y docker-compose
 
 ## Ejectuar EventoL en modo desarrollo
 
+Si estas ejecutando por primera vez el deploy, serán necesarios crear las siguientes carpetas
+
+```bash
+mkdir -p eventol/front/eventol
+mdkir -p deploy/docker/db/postgres
+mkdir -p eventol/front/webpack-stats-local.json
+```
+
 ```bash
 make deploy-dev
 ```
@@ -28,10 +36,10 @@ docker_worker_1     tail -f /dev/null                Up      0.0.0.0:8000->8000/
 ### Ejecutar el servidor de Django
 
 ```bash
-make migrate
+make migrate-dev
 make setup-frontend
-make collectstatic
-make runserver
+make collectstatic # esto falla ver en Prod si falla
+make runserver 
 ```
 
 ### Ejecutar el servidor de Reactjs

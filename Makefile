@@ -235,11 +235,20 @@ docker-backend-makemigrations: ## Run backend make migrations from manager app i
 docker-backend-migrate: ## Run backend migrate database in docker-compose
 	$(DOCKER_COMPOSE_PROD) exec -T worker make backend-migrate
 
+docker-backend-migrate-dev: ## Run backend migrate database in docker-compose
+	$(DOCKER_COMPOSE) exec -T worker make backend-migrate
+
 docker-backend-collectstatic: ## Run backend collect static files in docker-compose
 	$(DOCKER_COMPOSE_PROD) exec -T worker make backend-collectstatic
 
+docker-backend-collectstatic-dev: ## Run backend collect static files in docker-compose
+	$(DOCKER_COMPOSE) exec -T worker make backend-collectstatic
+
 docker-backend-createsuperuser: ## Run backend create super user in docker-compose
 	$(DOCKER_COMPOSE_PROD) exec -T worker make backend-createsuperuser
+
+docker-backend-createsuperuser-dev: ## Run backend create super user in docker-compose
+	$(DOCKER_COMPOSE) exec -T worker make backend-createsuperuser
 
 docker-backend-lint: ## Run backend linter in docker-compose
 	$(DOCKER_COMPOSE) exec -T worker make backend-lint
@@ -255,6 +264,9 @@ docker-backend-compile-translations: ## Compile translations files (update .mo f
 
 docker-backend-runserver: ## Runserver for development environment in docker-compose
 	$(DOCKER_COMPOSE_PROD) exec -T worker make backend-runserver
+
+docker-backend-runserver-dev: ## Runserver for development environment in docker-compose
+	$(DOCKER_COMPOSE) exec -T worker make backend-runserver
 
 docker-frontend-start-dev: ## Start frontend for development environment in docker-compose
 	$(DOCKER_COMPOSE) exec -T reactjs yarn start
@@ -291,10 +303,14 @@ docker-frontend-sasslint-with-report: ## Run sass linter and generate report in 
 
 ## Alias
 collectstatic: docker-backend-collectstatic ## Alias to docker-backend-collectstatic
+collectstatic-dev: docker-backend-collectstatic-dev  ## Alias to docker-backend-collectstatic-dev
 createsuperuser: docker-backend-createsuperuser ## Alias to docker-backend-createsuperuser
+createsuperuser-dev: docker-backend-createsuperuser-dev ## Alias to docker-backend-createsuperuser-dev
 makemigrations: docker-backend-makemigrations ## Alias to docker-backend-makemigrations
 migrate: docker-backend-migrate ## Alias to docker-backend-migrate
+migrate-dev: docker-backend-migrate-dev ## Alias to docker-backend-migrate-dev
 runserver: docker-backend-runserver ## Alias to docker-backend-runserver
+runserver-dev: docker-backend-runserver-dev ## Alias to docker-backend-runserver-dev
 setup-frontend: docker-frontend-install-dependencies ## Setup front end in docker-compose
 start-frontend: docker-frontend-start-dev ## Alias to docker-frontend-start-dev
 make-translations: docker-backend-make-translations ## Alias to docker-backend-make-translations
